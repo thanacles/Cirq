@@ -16,7 +16,7 @@ from typing import Any, Dict, List, TYPE_CHECKING, Tuple, Union, Sequence
 
 import numpy as np
 
-from cirq import ops, protocols, qis, study, value
+from cirq import ops, protocols, qis, params, value
 from cirq.sim import density_matrix_utils, simulator, act_on_density_matrix_args, simulator_base
 
 if TYPE_CHECKING:
@@ -219,7 +219,7 @@ class DensityMatrixSimulator(
 
     def _create_simulator_trial_result(
         self,
-        params: study.ParamResolver,
+        params: params.ParamResolver,
         measurements: Dict[str, np.ndarray],
         final_simulator_state: 'DensityMatrixSimulatorState',
     ) -> 'DensityMatrixTrialResult':
@@ -232,7 +232,7 @@ class DensityMatrixSimulator(
         self,
         program: 'cirq.Circuit',
         observables: Union['cirq.PauliSumLike', List['cirq.PauliSumLike']],
-        params: 'study.Sweepable',
+        params: 'params.Sweepable',
         qubit_order: ops.QubitOrderOrList = ops.QubitOrder.DEFAULT,
         initial_state: Any = None,
         permit_terminal_measurements: bool = False,
@@ -249,7 +249,7 @@ class DensityMatrixSimulator(
         if not isinstance(observables, List):
             observables = [observables]
         pslist = [ops.PauliSum.wrap(pslike) for pslike in observables]
-        for param_resolver in study.to_resolvers(params):
+        for param_resolver in params.to_resolvers(params):
             result = self.simulate(
                 program, param_resolver, qubit_order=qubit_order, initial_state=initial_state
             )
@@ -458,7 +458,7 @@ class DensityMatrixTrialResult(simulator.SimulationTrialResult):
 
     def __init__(
         self,
-        params: study.ParamResolver,
+        params: params.ParamResolver,
         measurements: Dict[str, np.ndarray],
         final_simulator_state: DensityMatrixSimulatorState,
     ) -> None:

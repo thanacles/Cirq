@@ -24,7 +24,7 @@ from typing import Any, Dict, List, Optional, Sequence, Set, TYPE_CHECKING, Iter
 import numpy as np
 import quimb.tensor as qtn
 
-from cirq import devices, study, ops, protocols, value
+from cirq import devices, params, ops, protocols, value
 from cirq._compat import deprecated_parameter
 from cirq.sim import simulator, simulator_base
 from cirq.sim.act_on_args import ActOnArgs
@@ -126,7 +126,7 @@ class MPSSimulator(
 
     def _create_simulator_trial_result(
         self,
-        params: study.ParamResolver,
+        params: params.ParamResolver,
         measurements: Dict[str, np.ndarray],
         final_simulator_state: 'MPSState',
     ) -> 'MPSTrialResult':
@@ -153,7 +153,7 @@ class MPSTrialResult(simulator.SimulationTrialResult):
 
     def __init__(
         self,
-        params: study.ParamResolver,
+        params: params.ParamResolver,
         measurements: Dict[str, np.ndarray],
         final_simulator_state: 'MPSState',
     ) -> None:

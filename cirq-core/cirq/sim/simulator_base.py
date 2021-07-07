@@ -32,7 +32,7 @@ from typing import (
 
 import numpy as np
 
-from cirq import circuits, ops, protocols, study, value, devices
+from cirq import circuits, ops, protocols, params, value, devices
 from cirq.sim import ActOnArgsContainer
 from cirq.sim.operation_target import OperationTarget
 from cirq.sim.simulator import (
@@ -223,13 +223,13 @@ class SimulatorBase(
             step_state.log_of_measurement_results.clear()
 
     def _run(
-        self, circuit: circuits.Circuit, param_resolver: study.ParamResolver, repetitions: int
+        self, circuit: circuits.Circuit, param_resolver: params.ParamResolver, repetitions: int
     ) -> Dict[str, np.ndarray]:
         """See definition in `cirq.SimulatesSamples`."""
         if self._ignore_measurement_results:
             raise ValueError("run() is not supported when ignore_measurement_results = True")
 
-        param_resolver = param_resolver or study.ParamResolver({})
+        param_resolver = param_resolver or params.ParamResolver({})
         resolved_circuit = protocols.resolve_parameters(circuit, param_resolver)
         check_all_resolved(resolved_circuit)
         qubits = tuple(sorted(resolved_circuit.all_qubits()))

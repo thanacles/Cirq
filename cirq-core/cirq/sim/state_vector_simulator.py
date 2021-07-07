@@ -19,7 +19,7 @@ from typing import Any, Dict, Iterator, Sequence, TYPE_CHECKING, Tuple, Generic,
 
 import numpy as np
 
-from cirq import ops, study, value
+from cirq import ops, params, value
 from cirq.sim import simulator, state_vector, simulator_base
 from cirq.sim.act_on_state_vector_args import ActOnStateVectorArgs
 
@@ -63,7 +63,7 @@ class SimulatesIntermediateStateVector(
 
     def _create_simulator_trial_result(
         self,
-        params: study.ParamResolver,
+        params: params.ParamResolver,
         measurements: Dict[str, np.ndarray],
         final_simulator_state: 'StateVectorSimulatorState',
     ) -> 'StateVectorTrialResult':
@@ -75,7 +75,7 @@ class SimulatesIntermediateStateVector(
         self,
         program: 'cirq.Circuit',
         bitstrings: Sequence[int],
-        params: study.Sweepable,
+        params: params.Sweepable,
         qubit_order: ops.QubitOrderOrList = ops.QubitOrder.DEFAULT,
     ) -> Iterator[Sequence[complex]]:
         if isinstance(bitstrings, np.ndarray) and len(bitstrings.shape) > 1:
@@ -142,7 +142,7 @@ class StateVectorTrialResult(state_vector.StateVectorMixin, simulator.Simulation
 
     def __init__(
         self,
-        params: study.ParamResolver,
+        params: params.ParamResolver,
         measurements: Dict[str, np.ndarray],
         final_simulator_state: StateVectorSimulatorState,
     ) -> None:

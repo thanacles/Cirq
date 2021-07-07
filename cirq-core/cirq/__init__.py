@@ -36,6 +36,7 @@ with _import.delay_import('cirq.protocols'):
         qis,
         ops,
         devices,
+        params,
         study,
     )
 from cirq import (
@@ -403,7 +404,7 @@ from cirq.sim import (
     StepResult,
 )
 
-from cirq.study import (
+from cirq.params import (
     dict_to_product_sweep,
     dict_to_zip_sweep,
     ExpressionMap,
@@ -415,7 +416,6 @@ from cirq.study import (
     ParamDictType,
     ParamResolver,
     ParamResolverOrSimilarType,
-    plot_state_histogram,
     Points,
     Product,
     Sweep,
@@ -423,9 +423,13 @@ from cirq.study import (
     to_resolvers,
     to_sweep,
     to_sweeps,
-    Result,
     UnitSweep,
     Zip,
+)
+
+from cirq.study import (
+    plot_state_histogram,
+    Result,
 )
 
 from cirq.value import (

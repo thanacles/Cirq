@@ -595,7 +595,7 @@ def test_tagged_operation_forwards_protocols():
 
     parameterized_op = cirq.XPowGate(exponent=sympy.Symbol('t'))(q1).with_tags(tag)
     assert cirq.is_parameterized(parameterized_op)
-    resolver = cirq.study.ParamResolver({'t': 0.25})
+    resolver = cirq.params.ParamResolver({'t': 0.25})
     assert cirq.resolve_parameters(parameterized_op, resolver) == cirq.XPowGate(exponent=0.25)(
         q1
     ).with_tags(tag)

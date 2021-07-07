@@ -14,7 +14,7 @@
 
 import sympy
 import cirq
-from cirq.study import flatten_expressions
+from cirq.params import flatten_expressions
 
 
 # None of the following tests use expressions of the form

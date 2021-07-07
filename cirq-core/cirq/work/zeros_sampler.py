@@ -17,7 +17,7 @@ from typing import Dict, List, TYPE_CHECKING
 
 import numpy as np
 
-from cirq import devices, work, study, protocols
+from cirq import devices, work, params, study, protocols
 
 if TYPE_CHECKING:
     import cirq
@@ -38,7 +38,7 @@ class ZerosSampler(work.Sampler, metaclass=abc.ABCMeta):
     def run_sweep(
         self,
         program: 'cirq.Circuit',
-        params: study.Sweepable,
+        params: params.Sweepable,
         repetitions: int = 1,
     ) -> List[study.Result]:
         """Samples circuit as if every measurement resulted in zero.
@@ -65,5 +65,5 @@ class ZerosSampler(work.Sampler, metaclass=abc.ABCMeta):
                 measurements[key] = np.zeros((repetitions, len(op.qubits)), dtype=int)
         return [
             study.Result(params=param_resolver, measurements=measurements)
-            for param_resolver in study.to_resolvers(params)
+            for param_resolver in params.to_resolvers(params)
         ]

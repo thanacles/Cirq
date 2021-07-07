@@ -18,7 +18,7 @@ from typing import AbstractSet, Any, cast, TYPE_CHECKING, TypeVar
 import sympy
 from typing_extensions import Protocol
 
-from cirq import study
+from cirq import params
 from cirq._doc import doc_private
 
 if TYPE_CHECKING:
@@ -168,7 +168,7 @@ def resolve_parameters(
         return val
 
     # Ensure it is a dictionary wrapped in a ParamResolver.
-    param_resolver = study.ParamResolver(param_resolver)
+    param_resolver = params.ParamResolver(param_resolver)
 
     # Handle special cases for sympy expressions and sequences.
     # These may not in fact preserve types, but we pretend they do by casting.

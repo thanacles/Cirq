@@ -23,7 +23,7 @@ from matplotlib import pyplot as plt
 
 # this is for older systems with matplotlib <3.2 otherwise 3d projections fail
 from mpl_toolkits import mplot3d  # pylint: disable=unused-import
-from cirq import circuits, ops, protocols, study
+from cirq import circuits, ops, protocols, params
 
 if TYPE_CHECKING:
     import cirq
@@ -241,7 +241,7 @@ def rabi_oscillations(
     theta = sympy.Symbol('theta')
     circuit = circuits.Circuit(ops.X(qubit) ** theta)
     circuit.append(ops.measure(qubit, key='z'))
-    sweep = study.Linspace(key='theta', start=0.0, stop=max_angle / np.pi, length=num_points)
+    sweep = params.Linspace(key='theta', start=0.0, stop=max_angle / np.pi, length=num_points)
     results = sampler.run_sweep(circuit, params=sweep, repetitions=repetitions)
     angles = np.linspace(0.0, max_angle, num_points)
     excited_state_probs = np.zeros(num_points)

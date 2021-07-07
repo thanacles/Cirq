@@ -31,7 +31,7 @@ class PasqalSampler(cirq.work.Sampler):
         self._authorization_header = {"Authorization": access_token}
 
     def _serialize_circuit(
-        self, circuit: cirq.circuits.Circuit, param_resolver: cirq.study.ParamResolverOrSimilarType
+        self, circuit: cirq.circuits.Circuit, param_resolver: cirq.params.ParamResolverOrSimilarType
     ) -> str:
         """Serialize a given Circuit.
         Args:
@@ -98,7 +98,7 @@ class PasqalSampler(cirq.work.Sampler):
         return result
 
     def run_sweep(
-        self, program: cirq.Circuit, params: cirq.study.Sweepable, repetitions: int = 1
+        self, program: cirq.Circuit, params: cirq.params.Sweepable, repetitions: int = 1
     ) -> List[cirq.study.Result]:
         """Samples from the given Circuit.
         In contrast to run, this allows for sweeping over different parameter
@@ -115,7 +115,7 @@ class PasqalSampler(cirq.work.Sampler):
         program.device.validate_circuit(program)
         trial_results = []
 
-        for param_resolver in cirq.study.to_resolvers(params):
+        for param_resolver in cirq.params.to_resolvers(params):
             json_str = self._serialize_circuit(circuit=program, param_resolver=param_resolver)
             results = self._send_serialized_circuit(
                 serialization_str=json_str, repetitions=repetitions

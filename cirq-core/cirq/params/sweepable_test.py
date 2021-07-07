@@ -49,46 +49,46 @@ def test_to_resolvers_iterable_sweeps():
 
 def test_to_resolvers_bad():
     with pytest.raises(TypeError, match='Unrecognized sweepable'):
-        for _ in cirq.study.to_resolvers('nope'):
+        for _ in cirq.params.to_resolvers('nope'):
             pass
 
 
 def test_to_sweeps_none():
-    assert cirq.study.to_sweeps(None) == [cirq.UnitSweep]
+    assert cirq.params.to_sweeps(None) == [cirq.UnitSweep]
 
 
 def test_to_sweeps_single():
     resolver = cirq.ParamResolver({})
-    assert cirq.study.to_sweeps(resolver) == [cirq.UnitSweep]
-    assert cirq.study.to_sweeps({}) == [cirq.UnitSweep]
+    assert cirq.params.to_sweeps(resolver) == [cirq.UnitSweep]
+    assert cirq.params.to_sweeps({}) == [cirq.UnitSweep]
 
 
 def test_to_sweeps_sweep():
     sweep = cirq.Linspace('a', 0, 1, 10)
-    assert cirq.study.to_sweeps(sweep) == [sweep]
+    assert cirq.params.to_sweeps(sweep) == [sweep]
 
 
 def test_to_sweeps_iterable():
     resolvers = [cirq.ParamResolver({'a': 2}), cirq.ParamResolver({'a': 1})]
     sweeps = [
-        cirq.study.Zip(cirq.Points('a', [2])),
-        cirq.study.Zip(cirq.Points('a', [1])),
+        cirq.params.Zip(cirq.Points('a', [2])),
+        cirq.params.Zip(cirq.Points('a', [1])),
     ]
-    assert cirq.study.to_sweeps(resolvers) == sweeps
-    assert cirq.study.to_sweeps([{'a': 2}, {'a': 1}]) == sweeps
+    assert cirq.params.to_sweeps(resolvers) == sweeps
+    assert cirq.params.to_sweeps([{'a': 2}, {'a': 1}]) == sweeps
 
 
 def test_to_sweeps_iterable_sweeps():
     sweeps = [cirq.Linspace('a', 0, 1, 10), cirq.Linspace('b', 0, 1, 10)]
-    assert cirq.study.to_sweeps(sweeps) == sweeps
+    assert cirq.params.to_sweeps(sweeps) == sweeps
 
 
 def test_to_sweeps_dictionary_of_list():
     with pytest.warns(DeprecationWarning, match='dict_to_product_sweep'):
-        assert cirq.study.to_sweeps({'t': [0, 2, 3]}) == cirq.study.to_sweeps(
+        assert cirq.params.to_sweeps({'t': [0, 2, 3]}) == cirq.params.to_sweeps(
             [{'t': 0}, {'t': 2}, {'t': 3}]
         )
-        assert cirq.study.to_sweeps({'t': [0, 1], 's': [2, 3], 'r': 4}) == cirq.study.to_sweeps(
+        assert cirq.params.to_sweeps({'t': [0, 1], 's': [2, 3], 'r': 4}) == cirq.params.to_sweeps(
             [
                 {'t': 0, 's': 2, 'r': 4},
                 {'t': 0, 's': 3, 'r': 4},
@@ -100,7 +100,7 @@ def test_to_sweeps_dictionary_of_list():
 
 def test_to_sweeps_invalid():
     with pytest.raises(TypeError, match='Unrecognized sweepable'):
-        cirq.study.to_sweeps('nope')
+        cirq.params.to_sweeps('nope')
 
 
 def test_to_sweep_sweep():

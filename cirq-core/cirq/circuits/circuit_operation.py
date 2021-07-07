@@ -23,7 +23,7 @@ from typing import TYPE_CHECKING, AbstractSet, Callable, Dict, List, Optional, T
 import dataclasses
 import numpy as np
 
-from cirq import circuits, ops, protocols, value, study
+from cirq import circuits, ops, protocols, value, params
 from cirq._compat import proper_repr
 
 if TYPE_CHECKING:
@@ -81,7 +81,7 @@ class CircuitOperation(ops.Operation):
     repetitions: int = 1
     qubit_map: Dict['cirq.Qid', 'cirq.Qid'] = dataclasses.field(default_factory=dict)
     measurement_key_map: Dict[str, str] = dataclasses.field(default_factory=dict)
-    param_resolver: study.ParamResolver = study.ParamResolver()
+    param_resolver: params.ParamResolver = params.ParamResolver()
     repetition_ids: Optional[List[str]] = dataclasses.field(default=None)
     parent_path: Tuple[str, ...] = dataclasses.field(default_factory=tuple)
 
@@ -120,7 +120,7 @@ class CircuitOperation(ops.Operation):
                 raise ValueError(f'Qid dimension conflict.\nFrom qid: {q}\nTo qid: {q_new}')
 
         # Ensure that param_resolver is converted to an actual ParamResolver.
-        object.__setattr__(self, 'param_resolver', study.ParamResolver(self.param_resolver))
+        object.__setattr__(self, 'param_resolver', params.ParamResolver(self.param_resolver))
 
     def base_operation(self) -> 'CircuitOperation':
         """Returns a copy of this operation with only the wrapped circuit.
@@ -526,7 +526,7 @@ class CircuitOperation(ops.Operation):
     def _with_measurement_key_mapping_(self, key_map: Dict[str, str]) -> 'CircuitOperation':
         return self.with_measurement_key_mapping(key_map)
 
-    def with_params(self, param_values: study.ParamResolverOrSimilarType) -> 'CircuitOperation':
+    def with_params(self, param_values: params.ParamResolverOrSimilarType) -> 'CircuitOperation':
         """Returns a copy of this operation with an updated ParamResolver.
 
         Note that any resulting parameter mappings with no corresponding

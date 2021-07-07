@@ -19,7 +19,7 @@ import pandas as pd
 import sympy
 from matplotlib import pyplot as plt
 
-from cirq import circuits, ops, study, value
+from cirq import circuits, ops, params, value
 from cirq._compat import proper_repr
 
 if TYPE_CHECKING:
@@ -44,7 +44,7 @@ def t2_decay(
     max_delay: 'cirq.DURATION_LIKE',
     min_delay: 'cirq.DURATION_LIKE' = None,
     repetitions: int = 1000,
-    delay_sweep: Optional[study.Sweep] = None,
+    delay_sweep: Optional[params.Sweep] = None,
     num_pulses: List[int] = None,
 ) -> Union['cirq.experiments.T2DecayResult', List['cirq.experiments.T2DecayResult']]:
     """Runs a t2 transverse relaxation experiment.
@@ -144,7 +144,7 @@ def t2_decay(
     max_pulses = max(num_pulses) if num_pulses else 0
 
     if not delay_sweep:
-        delay_sweep = study.Linspace(
+        delay_sweep = params.Linspace(
             delay_var,
             start=min_delay_dur.total_nanos(),
             stop=max_delay_dur.total_nanos(),
@@ -189,16 +189,16 @@ def t2_decay(
     circuit.append(ops.X(qubit) ** inv_x_var)
     circuit.append(ops.Y(qubit) ** inv_y_var)
     circuit.append(ops.measure(qubit, key='output'))
-    tomography_sweep = study.Zip(
-        study.Points('inv_x', [0.0, 0.5]),
-        study.Points('inv_y', [-0.5, 0.0]),
+    tomography_sweep = params.Zip(
+        params.Points('inv_x', [0.0, 0.5]),
+        params.Points('inv_y', [-0.5, 0.0]),
     )
 
     if num_pulses and max_pulses > 0:
         pulse_sweep = _cpmg_sweep(num_pulses)
-        sweep = study.Product(delay_sweep, pulse_sweep, tomography_sweep)
+        sweep = params.Product(delay_sweep, pulse_sweep, tomography_sweep)
     else:
-        sweep = study.Product(delay_sweep, tomography_sweep)
+        sweep = params.Product(delay_sweep, tomography_sweep)
 
     # Tabulate measurements into a histogram
     results = sampler.sample(circuit, params=sweep, repetitions=repetitions)
@@ -264,8 +264,8 @@ def _cpmg_sweep(num_pulses: List[int]):
     """
     pulse_points = []
     for n in range(max(num_pulses)):
-        pulse_points.append(study.Points(f'pulse_{n}', [1 if p > n else 0 for p in num_pulses]))
-    return study.Zip(*pulse_points)
+        pulse_points.append(params.Points(f'pulse_{n}', [1 if p > n else 0 for p in num_pulses]))
+    return params.Zip(*pulse_points)
 
 
 class T2DecayResult:

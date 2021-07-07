@@ -21,7 +21,7 @@ from typing import List, Optional, Type, Union, cast, TYPE_CHECKING
 
 import numpy as np
 
-from cirq import circuits, protocols, study, devices, ops, value
+from cirq import circuits, protocols, params, study, devices, ops, value
 from cirq._doc import document
 from cirq.sim import sparse_simulator, density_matrix_simulator
 from cirq.sim.clifford import clifford_simulator
@@ -49,7 +49,7 @@ def sample(
     program: 'cirq.Circuit',
     *,
     noise: 'cirq.NOISE_MODEL_LIKE' = None,
-    param_resolver: Optional[study.ParamResolver] = None,
+    param_resolver: Optional[params.ParamResolver] = None,
     repetitions: int = 1,
     dtype: Type[np.number] = np.complex64,
     seed: 'cirq.RANDOM_STATE_OR_SEED_LIKE' = None,
@@ -103,7 +103,7 @@ def final_state_vector(
     program: 'cirq.CIRCUIT_LIKE',
     *,
     initial_state: 'cirq.STATE_VECTOR_LIKE' = 0,
-    param_resolver: study.ParamResolverOrSimilarType = None,
+    param_resolver: params.ParamResolverOrSimilarType = None,
     qubit_order: ops.QubitOrderOrList = ops.QubitOrder.DEFAULT,
     dtype: Type[np.number] = np.complex64,
     seed: 'cirq.RANDOM_STATE_OR_SEED_LIKE' = None,
@@ -159,7 +159,7 @@ def final_state_vector(
 
 def sample_sweep(
     program: 'cirq.Circuit',
-    params: study.Sweepable,
+    params: params.Sweepable,
     *,
     noise: 'cirq.NOISE_MODEL_LIKE' = None,
     repetitions: int = 1,
@@ -189,7 +189,7 @@ def sample_sweep(
     prng = value.parse_random_state(seed)
 
     trial_results = []  # type: List[study.Result]
-    for param_resolver in study.to_resolvers(params):
+    for param_resolver in params.to_resolvers(params):
         measurements = sample(
             program,
             noise=noise,
@@ -207,7 +207,7 @@ def final_density_matrix(
     *,
     noise: 'cirq.NOISE_MODEL_LIKE' = None,
     initial_state: 'cirq.STATE_VECTOR_LIKE' = 0,
-    param_resolver: study.ParamResolverOrSimilarType = None,
+    param_resolver: params.ParamResolverOrSimilarType = None,
     qubit_order: ops.QubitOrderOrList = ops.QubitOrder.DEFAULT,
     dtype: Type[np.number] = np.complex64,
     seed: Optional[Union[int, np.random.RandomState]] = None,

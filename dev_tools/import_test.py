@@ -71,8 +71,8 @@ def verify_import_tree(depth: int = 1, track_others: bool = False, timeit: bool 
     Output for valid imports:
         Start cirq
           ...
-          Start cirq.study
-          End   cirq.study
+          Start cirq.params
+          End   cirq.params
           Start cirq.circuits
           End   cirq.circuits
           Start cirq.schedules
@@ -83,8 +83,8 @@ def verify_import_tree(depth: int = 1, track_others: bool = False, timeit: bool 
     Output for an invalid import in `cirq/circuits/circuit.py`:
         Start cirq
         ...
-          Start cirq.study
-          End   cirq.study
+          Start cirq.params
+          End   cirq.params
           Start cirq.circuits
         ERROR: cirq.circuits.circuit imported cirq.vis
             Start cirq.vis

@@ -19,8 +19,8 @@ import warnings
 from typing_extensions import Protocol
 
 from cirq._doc import document
-from cirq.study.resolver import ParamResolver, ParamResolverOrSimilarType
-from cirq.study.sweeps import ListSweep, Points, Sweep, UnitSweep, Zip, dict_to_product_sweep
+from cirq.params.resolver import ParamResolver, ParamResolverOrSimilarType
+from cirq.params.sweeps import ListSweep, Points, Sweep, UnitSweep, Zip, dict_to_product_sweep
 
 SweepLike = Union[ParamResolverOrSimilarType, Sweep]
 document(SweepLike, """An object similar to an iterable of parameter resolvers.""")

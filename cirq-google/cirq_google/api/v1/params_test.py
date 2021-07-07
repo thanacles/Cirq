@@ -266,7 +266,7 @@ def test_sweep_to_proto(sweep, expected):
     assert out == expected
 
 
-class MySweep(cirq.study.sweeps.SingleSweep):
+class MySweep(cirq.params.sweeps.SingleSweep):
     """A sweep that is not serializable."""
 
     def _tuple(self):

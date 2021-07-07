@@ -15,7 +15,7 @@
 import pytest, sympy
 
 import cirq
-from cirq.study import ParamResolver
+from cirq.params import ParamResolver
 
 
 @pytest.mark.parametrize(

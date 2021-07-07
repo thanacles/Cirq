@@ -18,7 +18,7 @@ from typing import overload, Any, Callable, List, Optional, Tuple, Union
 import sympy
 
 from cirq import protocols
-from cirq.study import resolver, sweeps, sweepable
+from cirq.params import resolver, sweeps, sweepable
 
 
 def flatten(val: Any) -> Tuple[Any, 'ExpressionMap']:

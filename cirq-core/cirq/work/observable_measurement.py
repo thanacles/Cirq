@@ -21,7 +21,7 @@ from typing import Iterable, Dict, List, Tuple, TYPE_CHECKING, Set, Sequence
 import numpy as np
 import sympy
 
-from cirq import circuits, study, ops, value
+from cirq import circuits, params, ops, value
 from cirq._doc import document
 from cirq.protocols import json_serializable_dataclass
 from cirq.work.observable_measurement_data import BitstringAccumulator
@@ -350,7 +350,7 @@ def _subdivide_meas_specs(
 def _to_sweep(param_tuples):
     """Turn param tuples into a sweep."""
     to_sweep = [dict(pt) for pt in param_tuples]
-    to_sweep = study.to_sweep(to_sweep)
+    to_sweep = params.to_sweep(to_sweep)
     return to_sweep
 
 
@@ -370,7 +370,7 @@ def measure_grouped_settings(
     stopping_criteria: StoppingCriteria,
     *,
     readout_symmetrization: bool = False,
-    circuit_sweep: 'cirq.study.sweepable.SweepLike' = None,
+    circuit_sweep: 'cirq.params.sweepable.SweepLike' = None,
 ) -> List[BitstringAccumulator]:
     """Measure a suite of grouped InitObsSetting settings.
 
@@ -408,7 +408,7 @@ def measure_grouped_settings(
         _pad_setting(max_setting, qubits): settings
         for max_setting, settings in grouped_settings.items()
     }
-    circuit_sweep = study.UnitSweep if circuit_sweep is None else study.to_sweep(circuit_sweep)
+    circuit_sweep = params.UnitSweep if circuit_sweep is None else params.to_sweep(circuit_sweep)
 
     # meas_spec provides a key for accumulators.
     # meas_specs_todo is a mutable list. We will pop things from it as various

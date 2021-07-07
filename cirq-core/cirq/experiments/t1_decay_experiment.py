@@ -18,7 +18,7 @@ import pandas as pd
 import sympy
 from matplotlib import pyplot as plt
 
-from cirq import circuits, ops, study, value
+from cirq import circuits, ops, params, value
 from cirq._compat import proper_repr
 
 if TYPE_CHECKING:
@@ -62,7 +62,7 @@ def t1_decay(
         raise ValueError('min_delay < 0')
     var = sympy.Symbol('delay_ns')
 
-    sweep = study.Linspace(
+    sweep = params.Linspace(
         var, start=min_delay_dur.total_nanos(), stop=max_delay_dur.total_nanos(), length=num_points
     )
 

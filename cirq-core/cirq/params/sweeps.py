@@ -31,7 +31,7 @@ import itertools
 import sympy
 
 from cirq._doc import document
-from cirq.study import resolver
+from cirq.params import resolver
 
 if TYPE_CHECKING:
     import cirq

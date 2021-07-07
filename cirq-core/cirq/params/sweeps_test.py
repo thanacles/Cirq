@@ -200,11 +200,11 @@ def test_equality():
 
 def test_repr():
     cirq.testing.assert_equivalent_repr(
-        cirq.study.sweeps.Product(cirq.UnitSweep),
+        cirq.params.sweeps.Product(cirq.UnitSweep),
         setup_code='import cirq\nfrom collections import OrderedDict',
     )
     cirq.testing.assert_equivalent_repr(
-        cirq.study.sweeps.Zip(cirq.UnitSweep),
+        cirq.params.sweeps.Zip(cirq.UnitSweep),
         setup_code='import cirq\nfrom collections import OrderedDict',
     )
     cirq.testing.assert_equivalent_repr(

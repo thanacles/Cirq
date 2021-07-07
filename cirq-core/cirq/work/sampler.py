@@ -18,7 +18,7 @@ import abc
 
 import pandas as pd
 
-from cirq import study
+from cirq import params
 
 if TYPE_CHECKING:
     import cirq
@@ -46,7 +46,7 @@ class Sampler(metaclass=abc.ABCMeta):
         Returns:
             Result for a run.
         """
-        return self.run_sweep(program, study.ParamResolver(param_resolver), repetitions)[0]
+        return self.run_sweep(program, params.ParamResolver(param_resolver), repetitions)[0]
 
     def sample(
         self,
@@ -113,7 +113,7 @@ class Sampler(metaclass=abc.ABCMeta):
             2  1    1
         """
 
-        sweeps_list = study.to_sweeps(params)
+        sweeps_list = params.to_sweeps(params)
         keys = sorted(sweeps_list[0].keys) if sweeps_list else []
         for sweep in sweeps_list:
             if sweep and set(sweep.keys) != set(keys):

@@ -34,7 +34,7 @@ from typing import Any, Dict, List, Sequence, Union
 import numpy as np
 
 import cirq
-from cirq import study, ops, protocols, value
+from cirq import params, ops, protocols, value
 from cirq.protocols import act_on
 from cirq.sim import clifford, simulator, simulator_base
 
@@ -108,7 +108,7 @@ class CliffordSimulator(
 
     def _create_simulator_trial_result(
         self,
-        params: study.ParamResolver,
+        params: params.ParamResolver,
         measurements: Dict[str, np.ndarray],
         final_simulator_state,
     ):
@@ -121,7 +121,7 @@ class CliffordSimulator(
 class CliffordTrialResult(simulator.SimulationTrialResult):
     def __init__(
         self,
-        params: study.ParamResolver,
+        params: params.ParamResolver,
         measurements: Dict[str, np.ndarray],
         final_simulator_state: 'CliffordState',
     ) -> None:

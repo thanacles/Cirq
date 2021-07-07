@@ -19,7 +19,7 @@ import numpy as np
 import pytest
 
 import cirq
-from cirq import study
+from cirq import params
 from cirq.sim.simulator import (
     TStepResult,
     TSimulatorState,
@@ -41,7 +41,7 @@ class SimulatesIntermediateStateImpl(
 
     def _create_simulator_trial_result(
         self,
-        params: study.ParamResolver,
+        params: params.ParamResolver,
         measurements: Dict[str, np.ndarray],
         final_simulator_state: Any,
     ) -> 'SimulationTrialResult':
@@ -462,7 +462,7 @@ def test_iter_definitions():
             self,
             program: 'cirq.Circuit',
             bitstrings: Sequence[int],
-            params: study.Sweepable,
+            params: params.Sweepable,
             qubit_order: cirq.QubitOrderOrList = cirq.QubitOrder.DEFAULT,
         ) -> Sequence[Sequence[complex]]:
             return [[1.0]]
@@ -471,7 +471,7 @@ def test_iter_definitions():
             self,
             program: 'cirq.Circuit',
             observables: Union['cirq.PauliSumLike', List['cirq.PauliSumLike']],
-            params: 'study.Sweepable',
+            params: 'params.Sweepable',
             qubit_order: cirq.QubitOrderOrList = cirq.QubitOrder.DEFAULT,
             initial_state: Any = None,
             permit_terminal_measurements: bool = False,
@@ -481,7 +481,7 @@ def test_iter_definitions():
         def simulate_sweep(
             self,
             program: 'cirq.Circuit',
-            params: study.Sweepable,
+            params: params.Sweepable,
             qubit_order: cirq.QubitOrderOrList = cirq.QubitOrder.DEFAULT,
             initial_state: Any = None,
         ) -> List[SimulationTrialResult]:

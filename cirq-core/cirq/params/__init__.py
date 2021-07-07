@@ -12,12 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Types and methods for running studies (repeated trials)."""
+"""Types and methods for handling parameters."""
 
-from cirq.study.result import (
-    Result,
+from cirq.params.flatten_expressions import (
+    ExpressionMap,
+    flatten,
+    flatten_with_params,
+    flatten_with_sweep,
 )
 
-from cirq.study.visualize import (
-    plot_state_histogram,
+from cirq.params.resolver import (
+    ParamDictType,
+    ParamResolver,
+    ParamResolverOrSimilarType,
+)
+
+from cirq.params.sweepable import (
+    Sweepable,
+    to_resolvers,
+    to_sweep,
+    to_sweeps,
+)
+
+from cirq.params.sweeps import (
+    Linspace,
+    ListSweep,
+    Points,
+    Product,
+    Sweep,
+    UnitSweep,
+    Zip,
+    dict_to_product_sweep,
+    dict_to_zip_sweep,
 )

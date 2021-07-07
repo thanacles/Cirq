@@ -14,7 +14,7 @@
 from typing import cast
 
 import cirq
-from cirq.study import sweeps
+from cirq.params import sweeps
 from cirq_google.api.v1 import params_pb2
 
 

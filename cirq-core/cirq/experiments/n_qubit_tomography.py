@@ -22,7 +22,7 @@ from typing import List, Optional, Sequence, Tuple, TYPE_CHECKING
 import numpy as np
 import sympy
 
-from cirq import circuits, ops, protocols, study
+from cirq import circuits, ops, protocols, params
 from cirq.experiments.qubit_characterizations import TomographyResult
 
 if TYPE_CHECKING:
@@ -76,10 +76,10 @@ class StateTomographyExperiment:
             exp = sympy.Symbol(f'exp_{i}')
             gate = ops.PhasedXPowGate(phase_exponent=phase_exp, exponent=exp)
             operations.append(gate.on(qubit))
-            sweeps.append(study.Points(phase_exp, phase_exp_vals) + study.Points(exp, exp_vals))
+            sweeps.append(params.Points(phase_exp, phase_exp_vals) + params.Points(exp, exp_vals))
 
         self.rot_circuit = circuits.Circuit(operations)
-        self.rot_sweep = study.Product(*sweeps)
+        self.rot_sweep = params.Product(*sweeps)
         self.mat = self._make_state_tomography_matrix(qubits)
 
     def _make_state_tomography_matrix(
